@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  web-proxy:
+    image: jwilder/nginx-proxy
+    container_name: web-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - proxy-certs:/etc/nginx/certs:ro
+      - proxy-vhosts:/etc/nginx/vhost.d
+      - proxy-html:/usr/share/nginx/html
+  web-proxy-letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: web-proxy-letsencrypt
+    restart: unless-stopped
+    environment:
+      - NGINX_PROXY_CONTAINER=web-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - proxy-certs:/etc/nginx/certs:rw
+      - proxy-vhosts:/etc/nginx/vhost.d
+      - proxy-html:/usr/share/nginx/html
+  amorphitec-www:
+    build:
+      context: ./www
+    container_name: amorphitec-www
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    environment:
+      - VIRTUAL_HOST=amorphitec.com,www.amorphitec.com
+      - LETSENCRYPT_HOST=amorphitec.com,www.amorphitec.com
+      - LETSENCRYPT_EMAIL=admin@amorphitec.com
+
+volumes:
+  proxy-certs:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/www-proxy/certs
+  proxy-vhosts:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/www-proxy/vhosts
+  proxy-html:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/www-proxy/html
