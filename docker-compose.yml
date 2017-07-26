@@ -43,9 +43,11 @@ services:
     restart: unless-stopped
     ports:
     - "25:25"
+    - "110:110"
     - "143:143"
     - "587:587"
     - "993:993"
+    - "995:995"
     volumes:
     - mail-data:/var/mail
     - mail-state:/var/mail-state
@@ -55,6 +57,7 @@ services:
     - ENABLE_CLAMAV=1
     - ENABLE_FAIL2BAN=1
     - ENABLE_POSTGREY=1
+    - ENABLE_POP3=1
     - ONE_DIR=1
     - DMS_DEBUG=0
     cap_add:
