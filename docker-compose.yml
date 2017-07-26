@@ -35,7 +35,7 @@ services:
       - VIRTUAL_HOST=amorphitec.io,www.amorphitec.io,amorphitec.com,www.amorphitec.com
       - LETSENCRYPT_HOST=amorphitec.io,www.amorphitec.io,amorphitec.com,www.amorphitec.com
       - LETSENCRYPT_EMAIL=admin@amorphitec.io
-  amorhpitec-mail:
+  amorphitec-mail:
     image: tvial/docker-mailserver:latest
     container_name: amorphitec-mail
     hostname: mail
