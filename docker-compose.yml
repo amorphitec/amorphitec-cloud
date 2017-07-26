@@ -32,9 +32,9 @@ services:
     ports:
       - "8000:80"
     environment:
-      - VIRTUAL_HOST=amorphitec.com,www.amorphitec.com
-      - LETSENCRYPT_HOST=amorphitec.com,www.amorphitec.com
-      - LETSENCRYPT_EMAIL=admin@amorphitec.com
+      - VIRTUAL_HOST=amorphitec.io,www.amorphitec.io,amorphitec.com,www.amorphitec.com
+      - LETSENCRYPT_HOST=amorphitec.io,www.amorphitec.io,amorphitec.com,www.amorphitec.com
+      - LETSENCRYPT_EMAIL=admin@amorphitec.io
 
 volumes:
   proxy-certs:
