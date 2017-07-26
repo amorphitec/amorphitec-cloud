@@ -35,6 +35,30 @@ services:
       - VIRTUAL_HOST=amorphitec.io,www.amorphitec.io,amorphitec.com,www.amorphitec.com
       - LETSENCRYPT_HOST=amorphitec.io,www.amorphitec.io,amorphitec.com,www.amorphitec.com
       - LETSENCRYPT_EMAIL=admin@amorphitec.io
+  amorhpitec-mail:
+    image: tvial/docker-mailserver:latest
+    container_name: amorphitec-mail
+    hostname: mail
+    domainname: amorphitec.io
+    restart: unless-stopped
+    ports:
+    - "25:25"
+    - "143:143"
+    - "587:587"
+    - "993:993"
+    volumes:
+    - mail-data:/var/mail
+    - mail-state:/var/mail-state
+    - ./config/:/tmp/docker-mailserver/
+    environment:
+    - ENABLE_SPAMASSASSIN=1
+    - ENABLE_CLAMAV=1
+    - ENABLE_FAIL2BAN=1
+    - ENABLE_POSTGREY=1
+    - ONE_DIR=1
+    - DMS_DEBUG=0
+    cap_add:
+    - NET_ADMIN
 
 volumes:
   proxy-certs:
@@ -49,3 +73,11 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: /var/data/www-proxy/html
+  mail-data:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/mail/data
+  mail-state:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/mail/state
