@@ -49,7 +49,7 @@ services:
     volumes:
     - mail-data:/var/mail
     - mail-state:/var/mail-state
-    - ./config/:/tmp/docker-mailserver/
+    - mail-config:/tmp/docker-mailserver
     environment:
     - ENABLE_SPAMASSASSIN=1
     - ENABLE_CLAMAV=1
@@ -81,3 +81,7 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: /var/data/mail/state
+  mail-config:
+    driver: local-persist
+    driver_opts:
+      mountpoint: /var/data/mail/config
