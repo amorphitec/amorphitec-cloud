@@ -59,6 +59,7 @@ services:
     - ENABLE_FAIL2BAN=1
     - ENABLE_POSTGREY=1
     - ENABLE_POP3=1
+    - SSL_TYPE=letsencrypt
     - ONE_DIR=1
     - DMS_DEBUG=0
     cap_add:
