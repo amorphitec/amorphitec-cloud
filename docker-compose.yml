@@ -32,8 +32,8 @@ services:
     ports:
       - "8000:80"
     environment:
-      - VIRTUAL_HOST=amorphitec.io,www.amorphitec.io,amorphitec.com,www.amorphitec.com
-      - LETSENCRYPT_HOST=amorphitec.io,www.amorphitec.io,amorphitec.com,www.amorphitec.com
+      - VIRTUAL_HOST=amorphitec.io,www.amorphitec.io,amorphitec.com,www.amorphitec.com,mail.amorphitec.io
+      - LETSENCRYPT_HOST=amorphitec.io,www.amorphitec.io,amorphitec.com,www.amorphitec.com,mail.amorphitec.io
       - LETSENCRYPT_EMAIL=admin@amorphitec.io
   amorphitec-mail:
     image: tvial/docker-mailserver:latest
@@ -61,8 +61,6 @@ services:
     - ENABLE_POP3=1
     - ONE_DIR=1
     - DMS_DEBUG=0
-    - LETSENCRYPT_HOST=mail.amorphitec.io
-    - LETSENCRYPT_EMAIL=admin@amorphitec.io
     cap_add:
     - NET_ADMIN
 
