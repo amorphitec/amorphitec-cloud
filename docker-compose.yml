@@ -56,7 +56,7 @@ services:
     - ./mail/config/dovecot/10-ssl.conf:/etc/dovecot/conf.d/10-master.conf
     environment:
     - ENABLE_SPAMASSASSIN=1
-    - ENABLE_CLAMAV=1
+    - ENABLE_CLAMAV=0
     - ENABLE_FAIL2BAN=1
     - ENABLE_POSTGREY=1
     - ENABLE_POP3=1
