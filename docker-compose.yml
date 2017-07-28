@@ -53,7 +53,7 @@ services:
     - mail-state:/var/mail-state
     - mail-config:/tmp/docker-mailserver
     - proxy-certs:/etc/letsencrypt/live:ro
-    - ./mail/config/dovecot/10-ssl.conf:/etc/dovecot/conf.d/10-master.conf
+    - ./mail/config/dovecot/10-ssl.conf:/etc/dovecot/conf.d/10-ssl.conf
     environment:
     - ENABLE_SPAMASSASSIN=1
     - ENABLE_CLAMAV=0
