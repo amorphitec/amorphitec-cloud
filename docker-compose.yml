@@ -124,21 +124,21 @@ volumes:
       mountpoint: /var/data/mail/config
   nextcloud-main:
     driver: local-persist
-    driver-opts:
+    driver_opts:
       mountpoint: /var/data/nextcloud/html
   nextcloud-apps:
     driver: local-persist
-    driver-opts:
+    driver_opts:
       mountpoint: /var/data/nextcloud/custom_apps
   nextcloud-config:
     driver: local-persist
-    driver-opts:
+    driver_opts:
       mountpoint: /var/data/nextcloud/config
   nextcloud-data:
     driver: local-persist
-    driver-opts:
+    driver_opts:
       mountpoint: /var/data/nextcloud/data
   nextcloud-db:
     driver: local-persist
-    driver-opts:
+    driver_opts:
       mountpoint: /var/data/nextcloud/db
