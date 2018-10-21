@@ -65,6 +65,37 @@ services:
     - DMS_DEBUG=0
     cap_add:
     - NET_ADMIN
+  amorphitec-nextcloud:
+    build:
+      context: ./nextcloud
+    container_name: amorphitec-nextcloud
+    hostname: nextcloud
+    domainname: amorphitec.io
+    restart: unless-stopped
+    ports:
+      - "8001:80"
+    volumes:
+      - nextcloud-main:/var/www/html
+      - nextcloud-apps:/var/www/html/custom_apps
+      - nextcloud-config:/var/www/html/config
+      - nextcloud-data:/var/www/html/data
+    environment:
+      - VIRTUAL_HOST=nextcloud.amorphitec.io
+      - LETSENCRYPT_HOST=nextcloud.amorphitec.io
+      - LETSENCRYPT_EMAIL=admin@amorphitec.io
+      - NEXTCLOUD_ADMIN_USER=
+      - NEXTCLOUD_ADMIN_PASSWORD=
+  amorphitec-nextcloud-db:
+    image: mariadb
+    container_name: amorphitec-nextcloud-db
+    restart: unless-stopped
+    volumes:
+      - nextcloud-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_PASSWORD=
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
 
 volumes:
   proxy-certs:
@@ -91,3 +122,23 @@ volumes:
     driver: local-persist
     driver_opts:
       mountpoint: /var/data/mail/config
+  nextcloud-main:
+    driver: local-persist
+    driver-opts:
+      mountpoint: /var/data/nextcloud/html
+  nextcloud-apps:
+    driver: local-persist
+    driver-opts:
+      mountpoint: /var/data/nextcloud/custom_apps
+  nextcloud-config:
+    driver: local-persist
+    driver-opts:
+      mountpoint: /var/data/nextcloud/config
+  nextcloud-data:
+    driver: local-persist
+    driver-opts:
+      mountpoint: /var/data/nextcloud/data
+  nextcloud-db:
+    driver: local-persist
+    driver-opts:
+      mountpoint: /var/data/nextcloud/db
