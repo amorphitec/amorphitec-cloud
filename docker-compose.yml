@@ -13,6 +13,7 @@ services:
       - proxy-certs:/etc/nginx/certs:ro
       - proxy-vhosts:/etc/nginx/vhost.d
       - proxy-html:/usr/share/nginx/html
+      - ./proxy/upload.conf:/etc/nginx/conf.d/upload.conf:ro
   web-proxy-letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: web-proxy-letsencrypt
@@ -66,8 +67,7 @@ services:
     cap_add:
       - NET_ADMIN
   amorphitec-nextcloud:
-    build:
-      context: ./nextcloud
+    image: nextcloud
     container_name: amorphitec-nextcloud
     hostname: nextcloud
     domainname: amorphitec.io
@@ -79,6 +79,7 @@ services:
       - nextcloud-apps:/var/www/html/custom_apps
       - nextcloud-config:/var/www/html/config
       - nextcloud-data:/var/www/html/data
+      - ./www/upload.ini:/usr/local/etc/php/conf.d/upload.ini:ro
     environment:
       - VIRTUAL_HOST=nextcloud.amorphitec.io
       - LETSENCRYPT_HOST=nextcloud.amorphitec.io
