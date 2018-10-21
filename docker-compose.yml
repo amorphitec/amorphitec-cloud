@@ -42,29 +42,29 @@ services:
     domainname: amorphitec.io
     restart: unless-stopped
     ports:
-    - "25:25"
-    - "110:110"
-    - "143:143"
-    - "587:587"
-    - "993:993"
-    - "995:995"
+      - "25:25"
+      - "110:110"
+      - "143:143"
+      - "587:587"
+      - "993:993"
+      - "995:995"
     volumes:
-    - mail-data:/var/mail
-    - mail-state:/var/mail-state
-    - mail-config:/tmp/docker-mailserver
-    - proxy-certs:/etc/letsencrypt/live:ro
-    - ./mail/config/dovecot/10-ssl.conf:/etc/dovecot/conf.d/10-ssl.conf
+      - mail-data:/var/mail
+      - mail-state:/var/mail-state
+      - mail-config:/tmp/docker-mailserver
+      - proxy-certs:/etc/letsencrypt/live:ro
+      - ./mail/config/dovecot/10-ssl.conf:/etc/dovecot/conf.d/10-ssl.conf
     environment:
-    - ENABLE_SPAMASSASSIN=1
-    - ENABLE_CLAMAV=0
-    - ENABLE_FAIL2BAN=1
-    - ENABLE_POSTGREY=1
-    - ENABLE_POP3=1
-    - SSL_TYPE=letsencrypt
-    - ONE_DIR=1
-    - DMS_DEBUG=0
+      - ENABLE_SPAMASSASSIN=1
+      - ENABLE_CLAMAV=0
+      - ENABLE_FAIL2BAN=1
+      - ENABLE_POSTGREY=1
+      - ENABLE_POP3=1
+      - SSL_TYPE=letsencrypt
+      - ONE_DIR=1
+      - DMS_DEBUG=0
     cap_add:
-    - NET_ADMIN
+      - NET_ADMIN
   amorphitec-nextcloud:
     build:
       context: ./nextcloud
