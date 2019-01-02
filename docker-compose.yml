@@ -103,6 +103,16 @@ services:
       - MYSQL_PASSWORD=${NEXTCLOUD_MYSQL_NEXTCLOUD_PASSWORD}
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
+  jimternet-www:
+    image: amorphic/jimternet:latest
+    container_name: jimternet-www
+    restart: unless-stopped
+    ports:
+      - "8002:80"
+    environment:
+      - VIRTUAL_HOST=jimter.net,www.jimter.net
+      - LETSENCRYPT_HOST=jimter.net,www.jimter.net
+      - LETSENCRYPT_EMAIL=admin@amorphitec.io
 
 volumes:
   proxy-certs:
