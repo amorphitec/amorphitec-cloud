@@ -27,9 +27,11 @@ services:
       - proxy-html:/usr/share/nginx/html
   watchtower:
     image: v2tec/watchtower
+    container_name: watchtower
+    restart: unless-stopped
+    command: --interval 30 --label-enable
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    command: --interval 30 --label-enable
   amorphitec-www:
     build:
       context: ./www
