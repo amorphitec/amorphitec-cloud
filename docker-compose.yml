@@ -25,6 +25,11 @@ services:
       - proxy-certs:/etc/nginx/certs:rw
       - proxy-vhosts:/etc/nginx/vhost.d
       - proxy-html:/usr/share/nginx/html
+  watchtower:
+    image: v2tec/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30 --label-enable
   amorphitec-www:
     build:
       context: ./www
