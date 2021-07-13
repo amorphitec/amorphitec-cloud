@@ -70,6 +70,7 @@ services:
       - SSL_TYPE=letsencrypt
       - ONE_DIR=1
       - DMS_DEBUG=0
+      - POSTFIX_MESSAGE_SIZE_LIMIT=52428800
     cap_add:
       - NET_ADMIN
   amorphitec-nextcloud:
