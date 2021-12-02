@@ -121,17 +121,6 @@ services:
       - VIRTUAL_HOST=jimter.net,www.jimter.net
       - LETSENCRYPT_HOST=jimter.net,www.jimter.net
       - LETSENCRYPT_EMAIL=admin@amorphitec.io
-  digifulcrum-www:
-    build:
-      context: ./www-digifulcrum
-    container_name: digifulcrum-www
-    restart: unless-stopped
-    ports:
-      - "8003:80"
-    environment:
-      - VIRTUAL_HOST=digifulcrum.com,www.digifulcrum.com
-      - LETSENCRYPT_HOST=digifulcrum.com,www.digifulcrum.com
-      - LETSENCRYPT_EMAIL=admin@digifulcrum.com
 
 volumes:
   proxy-certs:
