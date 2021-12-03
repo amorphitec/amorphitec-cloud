@@ -121,6 +121,17 @@ services:
       - VIRTUAL_HOST=jimter.net,www.jimter.net
       - LETSENCRYPT_HOST=jimter.net,www.jimter.net
       - LETSENCRYPT_EMAIL=admin@amorphitec.io
+  aiqua-optimus:
+    build:
+      context: ./aiqua-optimus
+    container_name: aiqua-optimus
+    restart: unless-stopped
+    ports:
+      - "8003:80"
+    environment:
+      - VIRTUAL_HOST=optimus.aiqua.com.au
+      - LETSENCRYPT_HOST=optimus.aiqua.com.au
+      - LETSENCRYPT_EMAIL=admin@aiqua.com.au
 
 volumes:
   proxy-certs:

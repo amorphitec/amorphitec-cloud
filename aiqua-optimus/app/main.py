@@ -1,0 +1,101 @@
+from datetime import datetime, time
+from typing import Optional
+
+from fastapi import FastAPI
+
+
+DOORS = [
+    {
+        "id": 1,
+        "name": "Front Door",
+        "ip_address": "192.168.1.1",
+    },
+    {
+        "id": 2,
+        "name": "Back Door",
+        "ip_address": "192.168.1.2",
+    },
+]
+
+TAGS = [
+    {
+        "id": "FFFFF7",
+    },
+    {
+        "id": "FDF7DF",
+    },
+    {
+        "id": "FFB7EF",
+    },
+    {
+        "id": "EFB77E",
+    },
+]
+
+SCHEDULES = [
+    {
+        "id": 1,
+        "door_id": 1,
+        "tag_id": "FFFFF7",
+        "start": time(hour=0, minute=0, second=0),
+        "end": time(hour=23, minute=59, second=59),
+    },   
+    {
+        "id": 2,
+        "door_id": 1,
+        "tag_id": "FFB7EF",
+        "start": time(hour=9, minute=0, second=0),
+        "end": time(hour=17, minute=0, second=0),
+    },   
+    {
+        "id": 3,
+        "door_id": 2,
+        "tag_id": "EFB77E",
+        "start": time(hour=18, minute=0, second=0),
+        "end": time(hour=23, minute=0, second=0),
+    },   
+]
+
+app = FastAPI()
+
+@app.get("/doors")
+def read_doors():
+    return DOORS
+
+@app.get("/doors/{door_id}")
+def read_door(door_id: int):
+    return [d for d in DOORS if d['id'] == door_id][0]
+
+@app.get("/tags")
+def read_tags():
+    return TAGS
+
+@app.get("/tags/{tag_id}")
+def read_tag(tag_id: int):
+    return [t for t in TAGS if t['id'] == tag_id][0]
+
+@app.get("/schedules")
+def read_schedules(door_id: Optional[int]=None, tag_id: Optional[str]=None):
+    if door_id == None and tag_id == None: return SCHEDULES
+    if door_id == None: return [s for s in SCHEDULES if s['tag_id'] == tag_id]
+    if tag_id == None: return [s for s in SCHEDULES if s['door_id'] == door_id]
+
+@app.get("/schedules/{schedule_id}")
+def read_schedule(schedule_id: int):
+    return [t for t in SCHEDULES if t['id'] == schedule_id][0]
+
+@app.get("/access")
+def check_access(tag_id: str, door_id: Optional[int]=None, timestamp: Optional[datetime]=datetime.now()):
+    """
+    Check whether the given tag is allowed to access the given door at the given time.
+
+    - **door_id:** if not provided, `door_id` is determined by the requesting IP address.
+    - **timestamp:** if not provided, the date and time when the request is made is used.
+    """
+    # This would normally lookup door based on the source IP of the request.
+    if door_id == None: door_id = 1
+    for s in SCHEDULES:
+        if s['door_id'] == door_id and s['tag_id'] == tag_id:
+            if timestamp.time() >= s['start'] and timestamp.time() <= s['end']:
+                return True
+    return False
