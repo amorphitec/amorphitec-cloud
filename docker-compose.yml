@@ -26,10 +26,10 @@ services:
       - proxy-vhosts:/etc/nginx/vhost.d
       - proxy-html:/usr/share/nginx/html
   watchtower:
-    image: v2tec/watchtower
+    image: containrrr/watchtower
     container_name: watchtower
     restart: unless-stopped
-    command: --interval 30 --label-enable
+    command: --interval 300 --label-enable
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   amorphitec-www:
